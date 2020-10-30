@@ -2,10 +2,24 @@ import logo from './logo.svg';
 import './App.css';
 import { Provider } from 'react-redux';
 import { applicationStore } from './redux/store';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import { HomePage } from './pages/HomePage';
+import { EpisodesPage } from './pages/EpisodesPage';
+
 function App() {
   return (
    <Provider store={ applicationStore() }>
-      <h1>APPLICATION PAGE a</h1>
+     <Router>
+       <Switch>
+         <Route path="/episodes/:season">
+           <EpisodesPage></EpisodesPage>
+         </Route>
+         <Route path="/">
+           <HomePage></HomePage>
+         </Route>
+       </Switch>
+     </Router>
    </Provider>
   );
 }
