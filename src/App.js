@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { HomePage } from './pages/HomePage';
 import { EpisodesPage } from './pages/EpisodesPage';
-
+import { EpisodeDetailPage } from './pages/EpisodeDetailPage';
 function App() {
   return (
    <Provider store={ applicationStore() }>
@@ -14,6 +14,9 @@ function App() {
        <Switch>
          <Route path="/episodes/:season">
            <EpisodesPage></EpisodesPage>
+         </Route>
+         <Route path="/episode-detail/:id">
+           <EpisodeDetailPage></EpisodeDetailPage>
          </Route>
          <Route path="/">
            <HomePage></HomePage>
