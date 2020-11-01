@@ -8,7 +8,8 @@ export const routes = {
         GET_QUOTE_BY_AUTHOR: URL_BASE_API_SERVER + 'quote?author='
     },
     DEATHS:{
-        LIST_ALL_DEATHS: URL_BASE_API_SERVER+'deaths'
+        LIST_ALL_DEATHS: URL_BASE_API_SERVER+'deaths',
+        GET_COUNT_DEATHS: URL_BASE_API_SERVER+'death-count?name='
     },
     CHARACTER:{
         GET_CHARACTER: URL_BASE_API_SERVER+'characters?name='

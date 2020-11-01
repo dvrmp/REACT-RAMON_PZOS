@@ -44,6 +44,7 @@ const _CharacterPage = ({selectCharacter,checkDeathCharacter,...props}) => {
                             (Object.keys(props.CHARACTER_SELECTED.EPISODE_DEATH).length>0) &&
                             <button onClick={()=>handleRedirectToEpisodeDetail(props.CHARACTER_SELECTED.EPISODE_DEATH)}>{props.CHARACTER_SELECTED.EPISODE_DEATH.title}</button>
                         }
+                        <h1>NUMERO DE ASESINATOS { props.CHARACTER_SELECTED.DEATH_COUNT }</h1>
                     </div>
                 </div>
                 : <h1>NO EXISTEN DATOS</h1>
