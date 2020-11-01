@@ -1,11 +1,13 @@
 import * as charactersTypes from '../action-types/character-selected.action-types';
+import * as quotesTypes from '../action-types/quote-actions.types';
 const initialState = {
     LOADING: false,
     ERROR_REQUEST: {},
     DATA_RESPONSE: {},
     EPISODE_DEATH: {},
     DEATH_COUNT: 0,
-    EPISODES_CHARACTER: []
+    EPISODES_CHARACTER: [],
+    QUOTES_CHARACTER: []
 }
 
 export const characterSelectedReducer = (state=initialState, action) => {
@@ -17,7 +19,8 @@ export const characterSelectedReducer = (state=initialState, action) => {
                 ERROR_REQUEST: {},
                 DATA_RESPONSE: [],
                 EPISODE_DEATH: {},
-                EPISODES_CHARACTER: []
+                EPISODES_CHARACTER: [],
+                QUOTES_CHARACTER: []
 
             }   
         case charactersTypes.CALLED_CHARACTER_SUCCESS:
@@ -26,7 +29,8 @@ export const characterSelectedReducer = (state=initialState, action) => {
                 LOADING: false,
                 ERROR_REQUEST: {},
                 DATA_RESPONSE: action.payload,
-                EPISODE_DEATH: {}
+                EPISODE_DEATH: {},
+                QUOTES_CHARACTER: []
             }   
         case charactersTypes.CALLED_CHARACTER_FAILED:
             return {
@@ -34,7 +38,8 @@ export const characterSelectedReducer = (state=initialState, action) => {
                 LOADING: false,
                 ERROR_REQUEST: action.payload,
                 DATA_RESPONSE: [],
-                EPISODE_DEATH: {}
+                EPISODE_DEATH: {},
+                
             }  
         case charactersTypes.CHECKING_CHARACTER_DEATH:
             return {
@@ -79,6 +84,33 @@ export const characterSelectedReducer = (state=initialState, action) => {
                 EPISODES_CHARACTER: action.payload
             }   
         case charactersTypes.CALLED_CHARACTER_EPISODES_FAILED:
+            return {
+                ...state,
+                LOADING: false,
+                ERROR_REQUEST: action.payload,
+                DATA_RESPONSE: [],
+                EPISODE_DEATH: {},
+                DEATH_COUNT: 0,
+                EPISODES_CHARACTER: []
+            }  
+
+        case quotesTypes.CALLING_QUOTES_CHARACTER:
+            return {
+                ...state,
+                LOADING: true,
+                ERROR_REQUEST: {},
+                DATA_RESPONSE: [],
+                DEATH_COUNT: 0,
+                EPISODE_DEATH: {}
+            }   
+        case quotesTypes.CALLED_QUOTES_CHARACTER_SUCCESS:
+            return {
+                ...state,
+                LOADING: false,
+                ERROR_REQUEST: {},
+                QUOTES_CHARACTER: action.payload || []
+            }   
+        case quotesTypes.CALLED_QUOTES_CHARACTER_FAILED:
             return {
                 ...state,
                 LOADING: false,

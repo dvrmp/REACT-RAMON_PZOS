@@ -1,7 +1,7 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { selectCharacter, checkDeathCharacter, getEpisodesCharacter } from '../redux/actions/character-selected.action';
+import { selectCharacter, checkDeathCharacter, getEpisodesCharacter,getQuotesCharacters } from '../redux/actions/character-selected.action';
 
 const mapStateToProps = (state) =>{
     return {
@@ -13,11 +13,26 @@ const mapDispatchToProps = (dispatch) => {
     return {
         selectCharacter: (character_name)=> dispatch(selectCharacter(character_name)),
         checkDeathCharacter: (character_name)=> dispatch(checkDeathCharacter(character_name)),
-        getEpisodesCharacter: (character_name)=> dispatch(getEpisodesCharacter(character_name))
+        getEpisodesCharacter: (character_name)=> dispatch(getEpisodesCharacter(character_name)),
+        getQuotesCharacters: (character_name)=> dispatch(getQuotesCharacters(character_name))
     };
 };
 
-const _CharacterPage = ({selectCharacter,checkDeathCharacter,getEpisodesCharacter,...props}) => {
+const _CharacterPage = ({selectCharacter,checkDeathCharacter,getEpisodesCharacter,getQuotesCharacters,...props}) => {
+    
+    const [ quoteState, setQuoteState ] = useState({quote:'',show_all_quotes:false});
+
+    const generateRandomQuote = () => {
+        setQuoteState({
+            quote: props.CHARACTER_SELECTED.QUOTES_CHARACTER[Math.floor(Math.random()*props.CHARACTER_SELECTED.QUOTES_CHARACTER.length)].quote
+        });
+        console.log(props.CHARACTER_SELECTED.QUOTES_CHARACTER[Math.floor(Math.random()*props.CHARACTER_SELECTED.QUOTES_CHARACTER.length)].quote)
+    }
+
+    const showAllQuotes = () => {
+        setQuoteState({...quoteState,show_all_quotes:true})
+    }
+
     const location = useLocation();
     const history = useHistory();
     const handleRedirectToEpisodeDetail = (episode)=>{
@@ -30,11 +45,36 @@ const _CharacterPage = ({selectCharacter,checkDeathCharacter,getEpisodesCharacte
         selectCharacter(location.state.character);
         checkDeathCharacter(location.state.character);
         getEpisodesCharacter(location.state.character);
-        console.log(props);
+        getQuotesCharacters(location.state.character);
     }, [])
 
     return (
         <Fragment>
+            {
+                (quoteState.show_all_quotes===true) &&
+                <div>
+                    {
+                       props.CHARACTER_SELECTED.QUOTES_CHARACTER.map((quote,index)=>{
+                       return <li key={index}>{ quote.quote }</li>
+                       }) 
+                    }
+                </div>
+            }
+            {
+                (props.CHARACTER_SELECTED.QUOTES_CHARACTER.length>0) ?
+                <div>
+                    <h1>CITAS DEL PERSONAJE</h1>
+                    {
+                        (quoteState.quote==='') && generateRandomQuote()
+                    }
+                    {
+                    }
+                    <h1> {quoteState.quote } </h1>
+                    <button onClick={()=>generateRandomQuote() }>GENERAR CITA</button>
+                    <button onClick={()=>showAllQuotes()}>MOSTRAR TODAS</button>
+                </div>
+                : <h1>ESTE PERSONAJE NO TIENE CITAS</h1>
+            }
             {
                 (props.CHARACTER_SELECTED.DATA_RESPONSE) &&
                 (Object.keys(props.CHARACTER_SELECTED.DATA_RESPONSE).length>0) ?
@@ -57,9 +97,9 @@ const _CharacterPage = ({selectCharacter,checkDeathCharacter,getEpisodesCharacte
             {
                       (props.CHARACTER_SELECTED.EPISODES_CHARACTER) && (props.CHARACTER_SELECTED.EPISODES_CHARACTER.length>0) 
                       && 
-                      props.CHARACTER_SELECTED.EPISODES_CHARACTER.map((episode)=>{
+                      props.CHARACTER_SELECTED.EPISODES_CHARACTER.map((episode,index)=>{
                               return (
-                              <li key={episode.episode_id}>{episode.title}</li>
+                              <li key={index}>{episode.title}</li>
                               )
                       })
             }
