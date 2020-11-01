@@ -8,6 +8,8 @@ import { HomePage } from './pages/HomePage';
 import { EpisodesPage } from './pages/EpisodesPage';
 import { EpisodeDetailPage } from './pages/EpisodeDetailPage';
 import { CharacterPage } from './pages/CharacterPage';
+import { KillersPage } from './pages/KillersPage';
+
 function App() {
   return (
    <Provider store={ applicationStore() }>
@@ -18,6 +20,9 @@ function App() {
          </Route>
          <Route path="/episode-detail/:id">
            <EpisodeDetailPage></EpisodeDetailPage>
+         </Route>
+         <Route path="/killers">
+           <KillersPage></KillersPage>
          </Route>
          <Route path="/character/:characterName">
            <CharacterPage></CharacterPage>

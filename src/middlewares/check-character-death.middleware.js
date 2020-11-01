@@ -13,7 +13,6 @@ function* watchGetCharacterDeathAsyns(){
 
 function* getDeathByEpisode(action){
     try{
-        console.log(action.payload,'PAYLOAD CHECK')
         const responseDeaths = yield call(axios.get,routes.DEATHS.LIST_ALL_DEATHS);
         const responseEpisodes = yield call(axios.get,routes.EPISODES.GET_ALL_EPISODES);
         const deathCharacter = responseDeaths.data.filter((death)=>death.death===action.payload.character);

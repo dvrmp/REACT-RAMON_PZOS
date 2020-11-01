@@ -12,6 +12,7 @@ export const routes = {
         GET_COUNT_DEATHS: URL_BASE_API_SERVER+'death-count?name='
     },
     CHARACTER:{
-        GET_CHARACTER: URL_BASE_API_SERVER+'characters?name='
+        GET_CHARACTER: URL_BASE_API_SERVER+'characters?name=',
+        LIST_ALL_CHARACTERS: URL_BASE_API_SERVER+'characters'
     }
 }

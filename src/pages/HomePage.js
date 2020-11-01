@@ -25,7 +25,12 @@ const _HomePage = ({selectSeason}) => {
             state: { season_selected: index }
         });
     };
-
+    const redirectToKillersPage = () => {
+        history.push({
+            pathname:'/killers'
+        });
+    };
+    
     return (
         <Fragment>
             <h1>HOME PAGE</h1>
@@ -41,6 +46,7 @@ const _HomePage = ({selectSeason}) => {
                     })
                 }
             </ul>
+            <button onClick={()=>redirectToKillersPage()} >IR A ASESINOS</button>
         </Fragment>
     );
 };

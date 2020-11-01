@@ -6,6 +6,7 @@ import { getCharacterMiddleware } from './get-character.middleware';
 import { checkCharacterDeathMiddleware } from './check-character-death.middleware';
 import { getEpisodesCharacteriddleware } from './get-all-episodes-character.middleware';
 import { getQuotesCharactermiddleware } from './quotes-character.middleware';
+import { getKillersMiddleware } from './killers.middleware';
 
 export function* applicationMiddleware() {
     yield spawn(getEpisodesMiddleware);
@@ -15,4 +16,6 @@ export function* applicationMiddleware() {
     yield spawn(checkCharacterDeathMiddleware);
     yield spawn(getEpisodesCharacteriddleware);
     yield spawn(getQuotesCharactermiddleware);
+    yield spawn(getKillersMiddleware);
+
 }
