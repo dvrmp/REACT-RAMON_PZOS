@@ -15,3 +15,12 @@ export const checkDeathCharacter = (character_name) => {
         }
     }
 } 
+
+export const getEpisodesCharacter = (character_name) => {
+    return {
+        type: characterSelectedTypes.CALLING_CHARACTER_EPISODES,
+        payload: {
+            character: character_name,
+        }
+    }
+} 

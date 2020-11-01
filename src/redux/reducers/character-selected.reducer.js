@@ -4,7 +4,8 @@ const initialState = {
     ERROR_REQUEST: {},
     DATA_RESPONSE: {},
     EPISODE_DEATH: {},
-    DEATH_COUNT: 0
+    DEATH_COUNT: 0,
+    EPISODES_CHARACTER: []
 }
 
 export const characterSelectedReducer = (state=initialState, action) => {
@@ -15,7 +16,9 @@ export const characterSelectedReducer = (state=initialState, action) => {
                 LOADING: true,
                 ERROR_REQUEST: {},
                 DATA_RESPONSE: [],
-                EPISODE_DEATH: {}
+                EPISODE_DEATH: {},
+                EPISODES_CHARACTER: []
+
             }   
         case charactersTypes.CALLED_CHARACTER_SUCCESS:
             return {
@@ -58,6 +61,32 @@ export const characterSelectedReducer = (state=initialState, action) => {
                 DATA_RESPONSE: [],
                 EPISODE_DEATH: {},
                 DEATH_COUNT: 0
+            }  
+        case charactersTypes.CALLING_CHARACTER_EPISODES:
+            return {
+                ...state,
+                LOADING: true,
+                ERROR_REQUEST: {},
+                DATA_RESPONSE: [],
+                DEATH_COUNT: 0,
+                EPISODE_DEATH: {}
+            }   
+        case charactersTypes.CALLED_CHARACTER_EPISODES_SUCCESS:
+            return {
+                ...state,
+                LOADING: false,
+                ERROR_REQUEST: {},
+                EPISODES_CHARACTER: action.payload
+            }   
+        case charactersTypes.CALLED_CHARACTER_EPISODES_FAILED:
+            return {
+                ...state,
+                LOADING: false,
+                ERROR_REQUEST: action.payload,
+                DATA_RESPONSE: [],
+                EPISODE_DEATH: {},
+                DEATH_COUNT: 0,
+                EPISODES_CHARACTER: []
             }  
         default: return state;
     }
