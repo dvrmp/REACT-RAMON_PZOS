@@ -1,38 +1,38 @@
 import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { selectEpisode, getQuoteCharacter } from '../redux/actions/episode-selected.action';
+import { selectEpisode, getQuoteCharacter, checkDeathCharacter } from '../redux/actions/episode-selected.action';
 
-//INCLUIR NUEVO ESTADO: QUOTE EN EL REDUCER
 const mapStateToProps = (state) =>{
     return {
         EPISODE_SELECTED: state.EPISODE_SELECTED,
     };
 };
 
-//INCLUIR NUEVA ACCION QUOTE
 const mapDispatchToProps = (dispatch) => {
     return {
         selectEpisode: (episode)=> dispatch(selectEpisode(episode)),
-        getQuoteCharacter: (character) => dispatch(getQuoteCharacter(character))
+        getQuoteCharacter: (character) => dispatch(getQuoteCharacter(character)),
+        checkDeathCharacter: (characters,episode)=>dispatch(checkDeathCharacter(characters,episode))
     };
 };
 
-const _EpisodeDetailPage = ({selectEpisode,getQuoteCharacter,...props}) => {
-    console.log(props)
+const _EpisodeDetailPage = ({selectEpisode,getQuoteCharacter,checkDeathCharacter,...props}) => {
     const location = useLocation();
-    console.log(location);
     useEffect(()=>{
         selectEpisode(location.state.episode);
-        const character = location.state.episode.characters[Math.floor(Math.random()*location.state.episode.characters.length)];
-        getQuoteCharacter(character);
+        const characterForQoute = location.state.episode.characters[Math.floor(Math.random()*location.state.episode.characters.length)];
+        getQuoteCharacter(characterForQoute);
+        checkDeathCharacter(location.state.episode.characters,location.state.episode.episode)
+        console.log(props);
     },[])
   
     return (
         <Fragment>
             
             {
-                (Object.keys(props.EPISODE_SELECTED.QUOTE_AUTHOR).length>0) && <h1>{props.EPISODE_SELECTED.QUOTE_AUTHOR.quote}</h1>
+                ( props.EPISODE_SELECTED.QUOTE_AUTHOR!=undefined) && 
+                <h1>{props.EPISODE_SELECTED.QUOTE_AUTHOR.quote}</h1>
             }
             <h1>{ props.EPISODE_SELECTED.EPISODE.title }</h1>
             <ul>
@@ -43,6 +43,13 @@ const _EpisodeDetailPage = ({selectEpisode,getQuoteCharacter,...props}) => {
                     })
                 }
             </ul>
+            <h1>DEATHS</h1>
+             {
+                    (props.EPISODE_SELECTED.DEATHS_CHARACTERS) &&
+                    props.EPISODE_SELECTED.DEATHS_CHARACTERS.map((character)=>{
+                    return <li key={ character.death_id }>{ character.death }</li>
+                    })
+             }
         </Fragment>
     );
 };

@@ -1,9 +1,8 @@
 import * as episodesTypes from '../action-types/episodes.action-types';
-
 const initialState = {
     LOADING: false,
     ERROR_REQUEST: {},
-    DATA_RESPONSE: []
+    DATA_RESPONSE: [],
 }
 
 export const episodesReducer = (state=initialState, action) => {
