@@ -14,8 +14,9 @@ function* watchGetEpisodesAsync(){
 function* getEpisodes(action){
     try{
         const response = yield call(axios.get,routes.EPISODES.GET_ALL_EPISODES);
+        const episodes = response.data.filter((episode)=>episode.series==="Breaking Bad");
         yield put({type: episodesTypes.CALLED_EPISODES_SUCCESS, payload:{
-            episodes: response.data,
+            episodes: episodes,
             season_selected: action.payload
         }});
     }catch(error){
