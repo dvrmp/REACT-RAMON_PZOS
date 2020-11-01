@@ -21,10 +21,8 @@ const _EpisodeDetailPage = ({selectEpisode,getQuoteCharacter,checkDeathCharacter
     const location = useLocation();
     useEffect(()=>{
         selectEpisode(location.state.episode);
-        const characterForQoute = location.state.episode.characters[Math.floor(Math.random()*location.state.episode.characters.length)];
-        getQuoteCharacter(characterForQoute);
+        getQuoteCharacter(location.state.episode.characters);
         checkDeathCharacter(location.state.episode.characters,location.state.episode.episode)
-        console.log(props);
     },[])
   
     return (
