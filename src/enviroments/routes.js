@@ -9,5 +9,8 @@ export const routes = {
     },
     DEATHS:{
         LIST_ALL_DEATHS: URL_BASE_API_SERVER+'deaths'
+    },
+    CHARACTER:{
+        GET_CHARACTER: URL_BASE_API_SERVER+'characters?name='
     }
 }

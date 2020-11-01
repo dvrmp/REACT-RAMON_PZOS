@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { selectEpisode, getQuoteCharacter, checkDeathCharacter } from '../redux/actions/episode-selected.action';
+import { selectEpisode, getQuoteCharacter, checkDeathCharacters } from '../redux/actions/episode-selected.action';
 
 const mapStateToProps = (state) =>{
     return {
@@ -13,16 +13,23 @@ const mapDispatchToProps = (dispatch) => {
     return {
         selectEpisode: (episode)=> dispatch(selectEpisode(episode)),
         getQuoteCharacter: (character) => dispatch(getQuoteCharacter(character)),
-        checkDeathCharacter: (characters,episode)=>dispatch(checkDeathCharacter(characters,episode))
+        checkDeathCharacters: (characters,episode)=>dispatch(checkDeathCharacters(characters,episode))
     };
 };
 
-const _EpisodeDetailPage = ({selectEpisode,getQuoteCharacter,checkDeathCharacter,...props}) => {
+const _EpisodeDetailPage = ({selectEpisode,getQuoteCharacter,checkDeathCharacters,...props}) => {
     const location = useLocation();
+    const history = useHistory();
+    const handleRedirectToECharacterPage = (character)=>{
+        history.push({
+            pathname:'/character/'+character,
+            state: { character: character }
+        })
+    }
     useEffect(()=>{
         selectEpisode(location.state.episode);
         getQuoteCharacter(location.state.episode.characters);
-        checkDeathCharacter(location.state.episode.characters,location.state.episode.episode)
+        checkDeathCharacters(location.state.episode.characters,location.state.episode.episode)
     },[])
   
     return (
@@ -37,7 +44,11 @@ const _EpisodeDetailPage = ({selectEpisode,getQuoteCharacter,checkDeathCharacter
                 {
                     (Object.keys(props.EPISODE_SELECTED.EPISODE).length>0) &&
                     props.EPISODE_SELECTED.EPISODE.characters.map((character,index)=>{
-                    return <li key={ index }>{ character }</li>
+                    return (
+                        <li key={ index }>{ character }
+                        <button onClick={ ()=>handleRedirectToECharacterPage(character) }>IR A PERSONAJE</button>
+                        </li>
+                    )
                     })
                 }
             </ul>
@@ -45,7 +56,9 @@ const _EpisodeDetailPage = ({selectEpisode,getQuoteCharacter,checkDeathCharacter
              {
                     (props.EPISODE_SELECTED.DEATHS_CHARACTERS) &&
                     props.EPISODE_SELECTED.DEATHS_CHARACTERS.map((character)=>{
-                    return <li key={ character.death_id }>{ character.death }</li>
+                    return (
+                    <li key={ character.death_id }>{ character.death }</li>
+                    )
                     })
              }
         </Fragment>

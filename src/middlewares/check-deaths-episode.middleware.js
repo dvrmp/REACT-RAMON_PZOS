@@ -3,7 +3,7 @@ import axios from 'axios';
 import * as deathsTypes from '../redux/action-types/deaths.action.types';
 import { routes } from '../enviroments/routes';
 
-export function* getCharacterDeath(){
+export function* getCharactersDeathEpisodeMiddleware(){
     yield spawn(watchGetCharacterDeathAsyns);
 }
 

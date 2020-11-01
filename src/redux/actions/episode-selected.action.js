@@ -14,7 +14,7 @@ export const getQuoteCharacter = (character) => {
     }
 }
 
-export const checkDeathCharacter = (characters,episode) => {
+export const checkDeathCharacters = (characters,episode) => {
     return {
         type: deathsTypes.CALLING_DEATHS,
         payload: {
