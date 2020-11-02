@@ -1,6 +1,8 @@
 import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getKillers } from '../redux/actions/killers.action';
+import { Container, List, ListItem, LinearProgress } from '@material-ui/core';
+
 const mapStateToProps = (state) =>{
     return {
         KILLERS: state.KILLERS
@@ -19,19 +21,26 @@ const _KillersPage = ({getKillers,...props}) => {
     },[])
     return (
         <Fragment>
-            <h1>KILLER PAGE</h1>
-            <ul>
+            <h1>Asesinos</h1>
+            <Container>
                 {
-                    props.KILLERS.KILLERS.map((killer,index)=>{
-                        return (
-                            <li>
-                                <p>{killer.name} :</p>
-                                <p>Numero de muertos: { killer.deathCount }</p>
-                            </li>
-                        )
-                    })
+                    (!props.KILLERS.LOADING) ? 
+                    <List>
+                    {
+                        props.KILLERS.KILLERS.map((killer,index)=>{
+                            return (
+                                <ListItem key={index}>
+                                    <p>{killer.name} :</p>
+                                    <p>Numero de muertos: { killer.deathCount }</p>
+                                </ListItem>
+                            )
+                        })
+                    }
+                    </List>
+                    : <LinearProgress></LinearProgress>
                 }
-            </ul>
+
+            </Container>
         </Fragment>
     );
 };
