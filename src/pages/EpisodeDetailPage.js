@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { selectEpisode, getQuoteCharacter, checkDeathCharacters } from '../redux/actions/episode-selected.action';
+import { Container ,List, ListItem, Button } from '@material-ui/core';
 
 const mapStateToProps = (state) =>{
     return {
@@ -34,33 +35,71 @@ const _EpisodeDetailPage = ({selectEpisode,getQuoteCharacter,checkDeathCharacter
   
     return (
         <Fragment>
-            
-            {
-                ( props.EPISODE_SELECTED.QUOTE_AUTHOR!=undefined) && 
-                <h1>{props.EPISODE_SELECTED.QUOTE_AUTHOR.quote}</h1>
-            }
-            <h1>{ props.EPISODE_SELECTED.EPISODE.title }</h1>
-            <ul>
-                {
-                    (Object.keys(props.EPISODE_SELECTED.EPISODE).length>0) &&
-                    props.EPISODE_SELECTED.EPISODE.characters.map((character,index)=>{
-                    return (
-                        <li key={ index }>{ character }
-                        <button onClick={ ()=>handleRedirectToECharacterPage(character) }>IR A PERSONAJE</button>
-                        </li>
-                    )
-                    })
-                }
-            </ul>
-            <h1>DEATHS</h1>
-             {
-                    (props.EPISODE_SELECTED.DEATHS_CHARACTERS) &&
-                    props.EPISODE_SELECTED.DEATHS_CHARACTERS.map((character)=>{
-                    return (
-                    <li key={ character.death_id }>{ character.death }</li>
-                    )
-                    })
-             }
+            <header>
+                 <div className="jumbotron">
+                     <div className="row">
+                         <div className="col-12">
+                            <h1>{location.state.episode.title}</h1>
+                         </div>
+                         <div className="col-12">
+                             <h3>Episodio: {location.state.episode.episode}, Temporada : {location.state.episode.season} </h3>
+                         </div>
+                         <div className="col-12">
+                            {
+                            ( props.EPISODE_SELECTED.QUOTE_AUTHOR!=undefined) && 
+                            <p>{props.EPISODE_SELECTED.QUOTE_AUTHOR.quote}</p>
+                            }
+                         </div>
+                     </div>
+                </div>
+           </header>
+           <Container>
+               <div className="row">
+                   <div className="col-6">
+                       <div className="card">
+                        <div className="card-header">
+                            Personajes que aparecen
+                        </div>
+                           <List>
+                           {
+                            (Object.keys(props.EPISODE_SELECTED.EPISODE).length>0) &&
+                                props.EPISODE_SELECTED.EPISODE.characters.map((character,index)=>{
+                                    return (
+                                        <ListItem key={ index }>
+                                            <Button variant="outlined" color="primary" fullWidth={true} onClick={ ()=>handleRedirectToECharacterPage(character) }>{ character }</Button>
+                                        </ListItem>
+                                    )
+                                })
+                            }
+                           </List>
+                        </div>
+                   </div>
+                   <div className="col-6">
+                        <div className="card">
+                            <div className="card-header">
+                                Muertes en el episodio
+                            </div>
+                            {
+                            (props.EPISODE_SELECTED.DEATHS_CHARACTERS.length>0) ?
+                              <List>
+                                  {
+                                       props.EPISODE_SELECTED.DEATHS_CHARACTERS.map((character)=>{
+                                        return (
+                                        <ListItem key={ character.death_id }>{ character.death }</ListItem>
+                                        )
+                                        })
+                                  }
+                              </List>
+                            :
+                            <div className="alert alert-warning" role="alert">
+                                No existen fallecidos en este episodio
+                            </div>
+                            }
+                        </div>
+                   </div>
+               </div>
+           </Container>
+
         </Fragment>
     );
 };
