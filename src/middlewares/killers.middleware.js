@@ -39,7 +39,6 @@ function* getKillers(action){
             }
         })
         deathsByKiller.reverse();
-        console.log('KILLERS A',deathsByKiller);
         yield put({type: killerTypes.CALLED_KILLERS_SUCCESS, payload:deathsByKiller});
     }catch(error){
         yield put({type: killerTypes.CALLED_KILLERS_FAILED, payload: error});

@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { selectSeason } from '../redux/actions/global.actions';
+import { Container,Button, List, ListItem } from '@material-ui/core';
 
 const mapStateToProps = (state) =>{
     return {
@@ -33,20 +34,32 @@ const _HomePage = ({selectSeason}) => {
     
     return (
         <Fragment>
-            <h1>HOME PAGE</h1>
-            <ul>
-                {
-                    globalState.SEASONS.map((season,index)=>{
-                        return (
-                            <li key={index}>
-                                SEASON { season }
-                                <button onClick={ ()=> handleSelectSeason(season) }>IR A TEMPORADA</button>
-                            </li>
-                        )
-                    })
-                }
-            </ul>
-            <button onClick={()=>redirectToKillersPage()} >IR A ASESINOS</button>
+           <header>
+                 <div className="jumbotron">
+                    <h1 className="display-4">Examen React: Breaking bad api</h1>
+                </div>
+           </header>
+           <Container>
+               <div className="row">
+                   <div className="col-6">
+                       <Button fullWidth={true}  variant="contained" color="primary">Personajes</Button>
+                   </div>
+                   <div className="col-6">
+                       <Button fullWidth={true} variant="contained" color="secondary" onClick={()=>redirectToKillersPage()}>Asesinos</Button>
+                   </div>
+               </div>
+               <List>
+                   {
+                       globalState.SEASONS.map((season,index)=>{
+                           return (
+                               <ListItem key={index}>
+                                   <Button fullWidth={true}  variant="outlined" onClick={ ()=> handleSelectSeason(season) }>Temporada : { season }</Button>
+                               </ListItem>
+                           )
+                       })
+                   }
+               </List>
+           </Container>
         </Fragment>
     );
 };
