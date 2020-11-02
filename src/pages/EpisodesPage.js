@@ -3,7 +3,7 @@ import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { getAllEpisodesBySeason } from '../redux/actions/episodes.actions';
-import { List, ListItem, Button } from '@material-ui/core';
+import { List, ListItem, Button, LinearProgress } from '@material-ui/core';
 
 //INCLUIR NUEVO ESTADO: QUOTE
 const mapStateToProps = (state) =>{
@@ -40,7 +40,7 @@ const _EpisodesPage = ({getAllEpisodesBySeason,...props})=> {
            </header>
            <Container>
                {
-                   (props.EPISODES_SEASON.LOADING) ? <h2>Cargando ....</h2> :
+                   (props.EPISODES_SEASON.LOADING) ? <LinearProgress></LinearProgress> :
                    (props.EPISODES_SEASON.DATA_RESPONSE.length>0) &&
                    <List>
                        {

@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { Provider } from 'react-redux';
 import { applicationStore } from './redux/store';
@@ -9,6 +8,7 @@ import { EpisodesPage } from './pages/EpisodesPage';
 import { EpisodeDetailPage } from './pages/EpisodeDetailPage';
 import { CharacterPage } from './pages/CharacterPage';
 import { KillersPage } from './pages/KillersPage';
+import { ListCharactersPage } from './pages/ListCharactersPage';
 
 function App() {
   return (
@@ -26,6 +26,9 @@ function App() {
          </Route>
          <Route path="/character/:characterName">
            <CharacterPage></CharacterPage>
+         </Route>
+         <Route path="/characters">
+           <ListCharactersPage></ListCharactersPage>
          </Route>
          <Route path="/">
            <HomePage></HomePage>

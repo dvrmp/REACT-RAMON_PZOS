@@ -31,6 +31,12 @@ const _HomePage = ({selectSeason}) => {
             pathname:'/killers'
         });
     };
+
+    const redirectToCharactersPage = () => {
+        history.push({
+            pathname:'/characters'
+        });
+    };
     
     return (
         <Fragment>
@@ -42,7 +48,7 @@ const _HomePage = ({selectSeason}) => {
            <Container>
                <div className="row">
                    <div className="col-6">
-                       <Button fullWidth={true}  variant="contained" color="primary">Personajes</Button>
+                       <Button fullWidth={true}  variant="contained" color="primary" onClick={()=>redirectToCharactersPage()}>Personajes</Button>
                    </div>
                    <div className="col-6">
                        <Button fullWidth={true} variant="contained" color="secondary" onClick={()=>redirectToKillersPage()}>Asesinos</Button>
